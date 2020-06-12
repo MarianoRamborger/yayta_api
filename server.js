@@ -33,6 +33,9 @@ const port = process.env.PORT || 3100;
 
 
 app.get("/", (req, res) => res.send("Esto es la API."));
+app.use('/api', routes)
+app.use('/api', pRoutes)
+app.use('/api', cRoutes)
 
 
 //Para cada endpoint, se pasa data de la request. Todas las funciones devuelven un Javascript object, so pueden ser metidas en a json response
@@ -83,11 +86,7 @@ app.post("/api/ValidateJWT", (req, res) => {
   }
 });
 
- 
 
-app.use('/api', routes)
-app.use('/api', pRoutes)
-app.use('/api', cRoutes)
 
 
 app.get("/api/items/findone", async (req, res) => {
