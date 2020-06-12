@@ -11,6 +11,13 @@ const { MongoClient } = require('mongodb');
 var cors = require('cors');
 
 
+///DELETE LATER
+const Joi = require('@hapi/joi');
+const _ = require('lodash')
+const productModel = require('./Models/Products');
+const {Product, validateProduct} = productModel
+///
+
 // const uri = "mongodb+srv://yayta:mocasin1@cluster0-gyc6q.gcp.mongodb.net/test?retryWrites=true&w=majority";
 // const client = new MongoClient(uri, {  useNewUrlParser: true, useUnifiedTopology: true })
 const mongoose = require('mongoose');
@@ -36,6 +43,21 @@ app.get("/", (req, res) => res.send("Esto es la API."));
 app.use('/api', routes)
 app.use('/api', pRoutes)
 app.use('/api', cRoutes)
+
+////////////////TESTING PURPOSES OLNLY
+app.get('/products/getproduct', async (req, res) => {
+  try {
+    let product = await Product.findOne({ name: req.body.name})
+    if (product) {
+        res.send(product)
+    }
+    else (res.status(404).send("Ningún producto con ese nombre existe en la base de datos."))
+  }
+  catch {
+      res.status(500).send("Error de conexión con el servidor.")
+
+  }
+})
 
 
 //Para cada endpoint, se pasa data de la request. Todas las funciones devuelven un Javascript object, so pueden ser metidas en a json response
