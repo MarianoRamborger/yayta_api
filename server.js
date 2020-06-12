@@ -8,6 +8,7 @@ const pRoutes = require('./Routes/p-routes.js') ;
 const cRoutes = require('./Routes/c-routes')
 const Main = require("./mdb")
 const { MongoClient } = require('mongodb');
+var cors = require('cors');
 
 
 // const uri = "mongodb+srv://yayta:mocasin1@cluster0-gyc6q.gcp.mongodb.net/test?retryWrites=true&w=majority";
@@ -16,6 +17,7 @@ const mongoose = require('mongoose');
 
 
 app.use(express.json()) //middleware, parsea incoming requests con json payloads. Popula un objeto body en la request con la data parseada
+app.use(cors())
 app.use(morgan("dev"))
 
 
