@@ -70,7 +70,7 @@ router.get('/products/getall', async (req, res) => {
 
 
 // Update
-router.put('/products   /updateproduct', async (req, res) => {
+router.put('/products/updateproduct', async (req, res) => {
     const {name, type, picture, price, stock, onSale, desc} = req.body
  
     try {
