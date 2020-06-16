@@ -2,6 +2,7 @@ const express = require("express");
 const morgan = require("morgan")
 const { GenerateJWT, DecodeJWT, ValidateJWT } = require("./dec-enc.js"); //importar solo estas funciones especificas por razones de seguridad.
 const Users = require('./tempDB.js')
+const bodyParser = require("body-parser")
 const app = express();
 const routes = require('./Routes/routes.js')
 const pRoutes = require('./Routes/p-routes.js') ;
@@ -9,7 +10,7 @@ const cRoutes = require('./Routes/c-routes')
 const Main = require("./mdb")
 const { MongoClient } = require('mongodb');
 var cors = require('cors');
-
+var path = require('path');
 
 
 
@@ -21,7 +22,8 @@ const mongoose = require('mongoose');
 app.use(express.json()) //middleware, parsea incoming requests con json payloads. Popula un objeto body en la request con la data parseada
 app.use(cors())
 app.use(morgan("dev"))
-
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 
 
@@ -106,6 +108,13 @@ app.get("/api/items/findone", async (req, res) => {
       try { Main.getStatus(); res.status(200).send() } catch { res.status(500).send()} 
       
     })
+
+
+app.use(express.static('public'))    
+
+app.get("/int", (req, res) => {
+  res.sendFile(__dirname + '/DBint/Int.html')
+})
 
 
 

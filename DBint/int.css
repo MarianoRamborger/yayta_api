@@ -1,0 +1,48 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    display: flex;
+    flex-flow: row wrap;
+    background-image: linear-gradient(to right, rgba(157, 45, 108, 1), rgba(157, 45, 108, 0.7));
+    font-size: 2em;
+    color: whitesmoke;
+    justify-content: center;
+    
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-title {
+    margin-bottom: 1%;
+    color: rgba(157, 45, 108, 1)
+}
+
+.form-input {
+    margin: 5px 0px;
+    font-size: 1em;
+}
+
+.nav-link {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    margin: 0px 20%;
+    margin-top: 20px;
+}
+
+.form-button {
+    margin-top: 1%;
+    font-size: 1em;
+    color: whitesmoke;
+    border-radius: 10px;
+    border-color: rgba(184,99,145, 0.15) ;
+    background-color: rgba(157, 45, 108, 1)
+}

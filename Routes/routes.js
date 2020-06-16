@@ -41,7 +41,6 @@ router.post('/users/create', async (req, res) => {
      
     try {
     if (error) {
-    
         return res.status(400).send();
     }
  
@@ -67,7 +66,7 @@ router.post('/users/create', async (req, res) => {
     }
     }
     catch (err) {
-            res.status(500).send("tu código falló maquinola")
+            res.status(500).send("Server Error")
     }
 
 });
@@ -157,6 +156,13 @@ router.delete('/users/delete', async (req, res) => {
 })
 
 
+router.post("/int", (req,res) => {
+    console.log(req.body)
+    console.log("asdas")
+  
+    res.status(200).send()
+  })
+  
 
 module.exports = router
 
