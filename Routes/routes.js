@@ -181,7 +181,7 @@ router.post("/int", async (req,res) => {
     let reqPath = path.join(__dirname, '../../../DBint/Int-list.html')
     console.log(reqPath)
     
-    res.sendFile(reqPath)
+    res.sendFile('https://yayta.herokuapp.com/DBint/int-list.html')
 
 
     }
