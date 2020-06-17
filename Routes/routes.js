@@ -178,10 +178,10 @@ router.post("/int", async (req,res) => {
     if (!comparePassword) { return res.status(400).send("Password incorrecto; cambiar para no dar info de que es el password lo que está mal")}
 
     
-    let reqPath = path.join(__dirname, '../../../DBint/Int-list.html')
+    let reqPath = path.join(__dirname, '../DBint/Int-list.html')
     console.log(reqPath)
     
-    res.sendFile('https://yayta.herokuapp.com/DBint/int-list.html')
+    res.sendFile(reqPath)
 
 
     }
