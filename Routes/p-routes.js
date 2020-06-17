@@ -144,12 +144,12 @@ router.delete('/products/deleteproduct', async (req, res) => {
 })
 
 router.get('/int-list', async (req, res) => {
-    let reqPath = path.join(__dirname, '../DBint/Int-list.html')
+    let reqPath = path.join(__dirname, '../DBint/int-list.html')
     res.sendFile(reqPath)
 })
 
 router.get('/int-up', async (req, res) => {
-    let reqPath = path.join(__dirname, '../DBint/Int-up.html')
+    let reqPath = path.join(__dirname, '../DBint/int-up.html')
     res.sendFile(reqPath)
 })
 
