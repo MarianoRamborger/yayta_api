@@ -6,9 +6,13 @@ const Joi = require('@hapi/joi');
 const _ = require('lodash')
 const {User, validateUser, validatePassword} = UserModel
 const { GenerateJWT, DecodeJWT, ValidateJWT } = require("../dec-enc.js")
-
+const path = require('path')
 
 // LIST USERS
+
+router.use(express.static('public'))    
+
+
 
 router.get('/users/read', async (req, res) => {
   const users = await User.find({});
@@ -156,12 +160,36 @@ router.delete('/users/delete', async (req, res) => {
 })
 
 
-router.post("/int", (req,res) => {
+router.post("/int", async (req,res) => {
     console.log(req.body)
-    console.log("asdas")
+ 
+    
+    try {
+        const {error} = validatePassword(req.body);
+    // is user request valid?  
+    if (error) { return res.status(400).send("User REQUEST could not be authenticated.")}
+    //Is the user present @ database?
+    let user = await User.findOne({ email: req.body.email });
+    if (!user) {
+        return res.status(400).send('Incorrect email or password.');
+    }
+    // Actual validation.
+    const comparePassword = await bcrypt.compare(req.body.password, user.password)
+    if (!comparePassword) { return res.status(400).send("Password incorrecto; cambiar para no dar info de que es el password lo que está mal")}
+
+    
+    let reqPath = path.join(__dirname, '../DBint/Int-list.html')
+    res.sendFile(reqPath)
+
+    }
+    catch (err) { res.status(500).send("Fatal Server Error")}
+})
+
+
+
+
+
   
-    res.status(200).send()
-  })
   
 
 module.exports = router

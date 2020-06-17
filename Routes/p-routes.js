@@ -3,8 +3,12 @@ const productModel = require('../Models/Products');
 const router = express.Router();
 const Joi = require('@hapi/joi');
 const _ = require('lodash')
+const path = require("path")
+const bodyParser = require("body-parser")
 
 const {Product, validateProduct} = productModel
+
+
 
 //List all.
 router.get('/products/getall', async (req, res) => {
@@ -20,6 +24,7 @@ router.get('/products/getall', async (req, res) => {
   // List One
 
   router.get('/products/getproduct', async (req, res) => {
+
       try {
         let product = await Product.findOne({ name: req.body.name})
         if (product) {
@@ -32,6 +37,31 @@ router.get('/products/getall', async (req, res) => {
 
       }
   })
+
+  // list for db interface
+
+  router.use(bodyParser.urlencoded({ extended: true }));
+router.use(bodyParser.json());
+
+  router.post('/products/getproduct', async (req, res) => {
+
+    console.log(req.body)
+
+    
+
+    try {
+      let product = await Product.findOne({ name: req.body.name})
+      if (product) {
+          res.send(product)
+      }
+      else (res.status(404).send("Ningún producto con ese nombre existe en la base de datos."))
+    }
+    catch {
+        res.status(500).send("Error de conexión con el servidor.")
+
+    }
+})
+
 
 
   router.post('/products/create', async (req, res) => {
@@ -113,8 +143,25 @@ router.delete('/products/deleteproduct', async (req, res) => {
 
 })
 
+router.get('/int-list', async (req, res) => {
+    let reqPath = path.join(__dirname, '../DBint/Int-list.html')
+    res.sendFile(reqPath)
+})
 
+router.get('/int-up', async (req, res) => {
+    let reqPath = path.join(__dirname, '../DBint/Int-up.html')
+    res.sendFile(reqPath)
+})
 
+router.get('/int-del', async (req, res) => {
+    let reqPath = path.join(__dirname, '../DBint/Int-del.html')
+    res.sendFile(reqPath)
+})
+
+router.get('/int-add', async (req, res) => {
+    let reqPath = path.join(__dirname, '../DBint/Int-add.html')
+    res.sendFile(reqPath)
+})
 
 
 module.exports = router

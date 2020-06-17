@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="int.css">
+    <title>Base de datos - Interface </title>
+</head>
+<body>
+    <div class="header">
+        Base de datos - Añadir item
+    </div>
+    <div class="div-form">
+        <form >
+            <h1 class="form-title"> Ingrese los datos del producto a añadir </h1>
+            <input name='name' id="name" type="text"  class="form-input" placeholder="nombre">
+            <input name='type' id="type" type="text"   class="form-input" placeholder="tipo de producto"> 
+            <input name='stock' id="stock" type="text"   class="form-input" placeholder="stock">     
+            <input name='price' id="price" type="text"   class="form-input" placeholder="precio">    
+            <input name='picture' id="picture" type="text"   class="form-input" placeholder="link de la imagen">    
+            <input name='onSale' id="onSale" type="text"   class="form-input" placeholder="En oferta? true/false">
+            <input name='desc' id="desc" type="text"  class="form-input" placeholder="Descripción">
+
+
+            <button type="button" class="form-button" onclick="add()"> Enviar</button>
+        </form>
+    </div>
+
+    <div id="results-div"></div>
+
+    <form class="nav-link">
+        <button type="submit" formaction="./int-list" formmethod="GET" > Listar </button> 
+        <button type="submit" formaction="./int-add" formmethod="GET" > Añadir </button> 
+        <button type="submit" formaction="./int-up" formmethod="GET" > Modificar </button> 
+        <button type="submit" formaction="./int-del" formmethod="GET" > Eliminar </button> 
+    </form>
+
+  
+    <script>
+
+    let formcleanse = document.querySelectorAll(".form-input")
+    for (let i = 0; i < formcleanse.length; i++) {formcleanse[i].value = ""}
+        
+const add = () => {
+    let datalist = document.querySelectorAll(".form-input")
+    let resultDiv = document.getElementById("results-div")
+
+  
+    var xhr = new XMLHttpRequest();
+    let data = { name : datalist[0].value, type: datalist[1].value, stock: datalist[2].value, price: datalist[3].value, picture: datalist[4].value, onSale: datalist[5].value, desc: datalist[6].value} 
+    
+    xhr.open("POST", "./products/create")
+
+    xhr.onload = function(data) {
+        if (this.status == 200) {
+        resultDiv.innerHTML = `<h5> CREADO:  ${this.responseText} </h5>`       
+        }
+        else {
+        resultDiv.innerHTML = `<h5> No pudo crearse el item. Por favor revise todos los campos </h5>`      
+        }
+    }
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(data));
+
+}
+    </script>
+
+    <style>
+
+    #results-div {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+
+    .nav-link button {
+    margin-top: 1%;
+    font-size: 1em;
+    color: whitesmoke;
+    border-radius: 10px;
+    border-color: rgba(184,99,145, 0.15)  !important;
+    background-color: rgba(157, 45, 108, 1) !important;
+}
+    </style>
+
+
+</body>
+</html>

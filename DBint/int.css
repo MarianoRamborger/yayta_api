@@ -38,11 +38,14 @@ form {
     margin-top: 20px;
 }
 
-.form-button {
+.form-button, .nav-link button {
     margin-top: 1%;
     font-size: 1em;
     color: whitesmoke;
     border-radius: 10px;
-    border-color: rgba(184,99,145, 0.15) ;
-    background-color: rgba(157, 45, 108, 1)
+    border-color: rgba(184,99,145, 0.15)  !important;
+    background-color: rgba(157, 45, 108, 1) !important;
 }
+
+
+

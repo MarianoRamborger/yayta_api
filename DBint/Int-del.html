@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="int.css">
+    <title>Base de datos - Interface </title>
+</head>
+<body>
+    <div class="header">
+        Base de datos - Borrar item
+    </div>
+    <div class="div-form">
+        <form >
+            <h1 class="form-title"> Ingrese el nombre de un producto a eliminar </h1>
+            <input name='name' id="item-name" type="text"  class="form-input" placeholder="Nombre del producto a eliminar">
+    
+
+            <button type="button" class="form-button" onclick="del()" > Enviar</button>
+        </form>
+    </div>
+
+    <div id="results-div"></div>
+
+    <form class="nav-link">
+        <button type="submit" formaction="./int-list" formmethod="GET" > Listar </button> 
+        <button type="submit" formaction="./int-add" formmethod="GET" > Añadir </button> 
+        <button type="submit" formaction="./int-up" formmethod="GET" > Modificar </button> 
+        <button type="submit" formaction="./int-del" formmethod="GET" > Eliminar </button> 
+    </form>
+
+  <script>
+        let formcleanse = document.querySelectorAll(".form-input")
+        for (let i = 0; i < formcleanse.length; i++) {formcleanse[i].value = ""}
+    const del = () => {
+        let name = document.getElementById("item-name")
+        let resultDiv = document.getElementById("results-div")
+    
+      
+        var xhr = new XMLHttpRequest();
+        let data = { name : name.value}
+        
+        xhr.open("Delete", "./products/deleteproduct")
+    
+        xhr.onload = function(data) {
+        resultDiv.innerHTML = `<h5> ${this.responseText} </h5>`
+        }
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify(data));
+    
+    
+    }
+    
+    </script> 
+    
+    <style>
+        #results-div {
+            width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        }
+    
+    
+    
+        .nav-link button {
+        margin-top: 1%;
+        font-size: 1em;
+        color: whitesmoke;
+        border-radius: 10px;
+        border-color: rgba(184,99,145, 0.15)  !important;
+        background-color: rgba(157, 45, 108, 1) !important;
+    }
+    
+    
+        </style>
+ 
+</body>
+</html>
