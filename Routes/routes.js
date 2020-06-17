@@ -182,7 +182,6 @@ router.post("/int", async (req,res) => {
     
     res.sendFile('../DBint/Int-list.html')
 
-        res.status(200).send("logueo exitoso")
 
     }
     catch (err) { res.status(500).send("Fatal Server Error")}
