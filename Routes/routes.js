@@ -182,7 +182,7 @@ router.post("/int", async (req,res) => {
     
     let reqPath = path.join(__dirname, '../DBint/Int-list.html')
  
-    path.dirname(require.main.filename)
+    console.log(path.dirname(require.main.filename))
 
     res.sendFile(reqPath)
 
