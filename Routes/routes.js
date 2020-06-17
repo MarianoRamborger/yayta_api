@@ -180,7 +180,7 @@ router.post("/int", async (req,res) => {
     
     // let reqPath = path.join(__dirname, '../DBint/Int-list.html')
     
-    // res.sendFile(reqPath)
+    res.sendFile('../DBint/Int-list.html')
 
         res.status(200).send("logueo exitoso")
 
