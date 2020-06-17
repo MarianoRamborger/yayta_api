@@ -179,9 +179,9 @@ router.post("/int", async (req,res) => {
 
     
     let reqPath = path.join(__dirname, './../../DBint/Int-list.html')
-    console.log(`El path es: reqPath`)
+    console.log(`El path es: ${reqPath}`)
     
-    res.sendFile(reqPath)
+    res.sendFile('./DBint/Int-list.html')
 
 
     }
