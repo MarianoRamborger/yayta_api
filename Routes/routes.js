@@ -8,6 +8,8 @@ const {User, validateUser, validatePassword} = UserModel
 const { GenerateJWT, DecodeJWT, ValidateJWT } = require("../dec-enc.js")
 const path = require('path')
 
+//Actually mostly user routes
+
 
 // LIST USERS
 

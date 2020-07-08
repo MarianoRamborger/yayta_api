@@ -9,6 +9,7 @@ const bodyParser = require("body-parser")
 const {Product, validateProduct} = productModel
 
 
+//Products Route
 
 //List all.
 router.get('/products/getall', async (req, res) => {
@@ -62,7 +63,7 @@ router.use(bodyParser.json());
     }
 })
 
-
+// Create
 
   router.post('/products/create', async (req, res) => {
     // First Validate The Request

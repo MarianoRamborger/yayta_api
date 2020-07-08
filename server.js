@@ -66,7 +66,7 @@ app.post("/api/ValidateJWT", (req, res) => {
     const { Username, Password } = req.body
     
   if (typeof Users[req.body.Username] !== "undefined") {    
-    if (Users[req.body.Username] === req.body.Password) { //Esto solo es posible porque en la fakeDB los users son keys y los passwords son value
+    if (Users[req.body.Username] === req.body.Password) { //Esto solo es posible porque en la DB los users son keys y los passwords son value
       
         const header = { alg: "HS512", typ: "JWT"}
         const claims = { Username }

@@ -8,6 +8,8 @@ const mercadopago = require ('mercadopago');
 const {Product, validateProduct} = productModel
 const {User, validateUser, validatePassword} = UserModel
 
+//checkout route
+
 
 mercadopago.configure({
     access_token: 'TEST-992414251321724-061019-acd83ceadd1553ea6b21d78d13820b3c-155337841'
