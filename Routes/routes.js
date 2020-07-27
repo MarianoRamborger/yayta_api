@@ -43,12 +43,14 @@ router.get('/users/findone', async (req, res) => {
 
 router.post('/users/create', async (req, res) => {
     // First Validate The Request
+    console.log("loggin phone:")
+    console.log(req.body.phone)
     const { error } = await validateUser(req.body);
     console.log(error)
      
     try {
     if (error) {
-        return res.status(400).send();
+        return res.status(400).send("User schema could not be validated");
     }
  
     // Check if this user already exisits
@@ -60,7 +62,8 @@ router.post('/users/create', async (req, res) => {
         user = new User({
             name: req.body.name,
             email: req.body.email,
-            password: req.body.password
+            password: req.body.password,
+            phone: req.body.phone
         });
 
         //Encriptadou

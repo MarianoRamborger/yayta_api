@@ -7,6 +7,8 @@ const _ = require('lodash')
 const mercadopago = require ('mercadopago');
 const {Product, validateProduct} = productModel
 const {User, validateUser, validatePassword} = UserModel
+const zonaChecker = require("../zonaChecker");
+const envioChecker = require("../envioChecker");
 
 //checkout route
 
@@ -16,9 +18,18 @@ mercadopago.configure({
   });
   
 
+
+  //Biggest function probs. Unloads el carrito.
 router.post('/checkout', async (req, res) => {
-    const {user, cart} = req.body
-  
+    const {user, cart, info} = req.body
+  //TODO: AGREGAR CODIGO POSTAL EN LA DATA
+
+        console.log(user)
+        console.log ("//////////////////////////////////////////////////////////////////////////////////////////////////////////////")
+        console.log(cart)
+        console.log ("//////////////////////////////////////////////////////////////////////////////////////////////////////////////")
+        console.log(info)
+
 
     try {
         let DBuser = await User.findOne({email: user});
@@ -35,13 +46,16 @@ router.post('/checkout', async (req, res) => {
         }
 
         DBuser.shoppingCart = []
-    
+
+        let shippingWeight = 0
+     
        cart.map (Cartproduct => {
+
            products.map(DBproduct => {
             
                if (Cartproduct.name === DBproduct.name){
                 
-                if (Cartproduct.cantidad <= DBproduct.stock || DBproduct.stock > 0) { 
+                if (Cartproduct.cantidad <= DBproduct.stock && DBproduct.stock > 0) { 
     
                     DBuser.shoppingCart.push ({
                        
@@ -51,9 +65,12 @@ router.post('/checkout', async (req, res) => {
                         picture: DBproduct.picture,
                         price: DBproduct.price,
                         desc: DBproduct.desc,
-                        cantidad:  Cartproduct.cantidad
+                        cantidad:  Cartproduct.cantidad,
+                        weight : DBproduct.weight
     
                     })
+
+                    shippingWeight += DBproduct.weight * Cartproduct.cantidad
                 }
     
                 else {
@@ -65,12 +82,28 @@ router.post('/checkout', async (req, res) => {
                         picture: DBproduct.picture,
                         price: DBproduct.price,
                         desc: DBproduct.desc,
-                        cantidad:  Dbproduct.stock })
+                        cantidad:  Dbproduct.stock 
+                    })
+                    shippingWeight += DBproduct.weight * DBproduct.stock
                 }
                } 
-           })               
+           }) 
+           
+              
        })
+
+       let zona = zonaChecker(info.codPos)
        
+       let shippingPrice = envioChecker(zona, shippingWeight, info.tipoEnvio)
+       
+    
+
+       // AQUÍ: CALCULO DEL ENVÍO EN BASE AL PESO Y AL CÓDIGO POSTAL.
+
+       //////////////////////////////////////////////////////////////////////////////
+
+       // Acá arranca la integración con mercado libre.
+
        let items = []
 
        DBuser.shoppingCart.map(item => {
@@ -89,7 +122,7 @@ router.post('/checkout', async (req, res) => {
     //     "pending": "wwww.google.com.ar"
     // },
     // "auto_return": "approved",
-    // }
+    // }    
 
     //    let preference = {
     //    items: [
@@ -141,7 +174,7 @@ router.post('/checkout', async (req, res) => {
 
 
 
-
+// El carrito es subido al usuario. Pasa en login (si el cart no tiene nada in), en logout y en abrupt exit.
 router.put('/cart/upload', async (req, res) => {
     const {user, cart} = req.body
  
@@ -157,7 +190,10 @@ router.put('/cart/upload', async (req, res) => {
     if (!products) {
         return res.status(400).send('Products not found')
     }
+
     DBuser.shoppingCart = []
+
+    // Checks si user and products existe. If everything does, maps products in cart and db. Then los pushea al user en la db.
 
    cart.map (Cartproduct => {
        products.map(DBproduct => {
@@ -165,6 +201,7 @@ router.put('/cart/upload', async (req, res) => {
            if (Cartproduct.name === DBproduct.name){
             
             if (Cartproduct.cantidad <= DBproduct.stock || DBproduct.stock > 0) { 
+                // el DBproduct.stock > 0, while confuso at first, is there porque en el else, en ausencia de la cantidad indicada de productos, mete el máximo posible.
 
                 DBuser.shoppingCart.push ({
                    
@@ -174,7 +211,9 @@ router.put('/cart/upload', async (req, res) => {
                     picture: DBproduct.picture,
                     price: DBproduct.price,
                     desc: DBproduct.desc,
-                    cantidad:  Cartproduct.cantidad
+                    stock: DBproduct.stock, //El stock está para evitar generar conflictos upon reloads
+                    cantidad:  Cartproduct.cantidad,
+                    weight: DBproduct.weight
 
                 })
             }
@@ -188,7 +227,10 @@ router.put('/cart/upload', async (req, res) => {
                     picture: DBproduct.picture,
                     price: DBproduct.price,
                     desc: DBproduct.desc,
-                    cantidad:  Dbproduct.stock })
+                    stock: DBproduct.stock, //El stock está para evitar generar conflictos upon reloads
+                    cantidad:  DBproduct.stock, //key diference. Mete todo lo que hay de stock.
+                    weight: DBproduct.weight
+                })
             }
            } 
        })
@@ -203,6 +245,9 @@ router.put('/cart/upload', async (req, res) => {
     }
 
 })
+
+
+//Downloads el carrito, sin borrarlo del user.
 
 router.post('/cart/download', async (req, res) => { 
 

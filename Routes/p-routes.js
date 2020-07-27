@@ -39,11 +39,12 @@ router.get('/products/getall', async (req, res) => {
       }
   })
 
-  // list for db interface
+
 
   router.use(bodyParser.urlencoded({ extended: true }));
-router.use(bodyParser.json());
+  router.use(bodyParser.json());
 
+    // list for db interface
   router.post('/products/getproduct', async (req, res) => {
 
     console.log(req.body)
@@ -86,7 +87,9 @@ router.use(bodyParser.json());
             price: req.body.price,
             stock: req.body.stock,
             onSale: req.body.onSale,
-            desc: req.body.desc     
+            desc: req.body.desc,
+            weight: req.body.weight  
+              
         });
         await product.save();
         res.send(product);
@@ -102,7 +105,7 @@ router.use(bodyParser.json());
 
 // Update
 router.put('/products/updateproduct', async (req, res) => {
-    const {name, type, picture, price, stock, onSale, desc} = req.body
+    const {name, type, picture, price, stock, onSale, desc, weight} = req.body
  
     try {
         
@@ -118,6 +121,7 @@ router.put('/products/updateproduct', async (req, res) => {
         if (stock) {product.stock = stock}
         if (onSale) {product.onSale = onSale}
         if (desc) {product.desc = desc}
+        if (weight) {product.weight = weight}
 
         await product.save()
         res.status(200).send(product)
@@ -143,6 +147,9 @@ router.delete('/products/deleteproduct', async (req, res) => {
     catch {return res.status(500).send('Server Error')}
 
 })
+
+
+//DB interface
 
 router.get('/int-list', async (req, res) => {
     let reqPath = path.join(__dirname, '../DBint/int-list.html')

@@ -32,11 +32,11 @@ const port = process.env.PORT || 3100;
 
   mongoose.connect('mongodb+srv://yayta:mocasin1@cluster0-gyc6q.gcp.mongodb.net/yayta?retryWrites=true&w=majority', {
   useNewUrlParser: true  , useUnifiedTopology: true
-}); //THIS THIS IS LO QUE FUNCIONA LO QUE HACE TODO QUE TODO FUNCION REEEE
+}); //Setting up the connection to mDB via mongoose.
 
 
-
-app.get("/", (req, res) => res.send("Esto es la API."));
+// Carga todas las rutas.
+app.get("/api", (req, res) => res.send("Esto es la API."));
 app.use('/api', routes)
 app.use('/api', pRoutes)
 app.use('/api', cRoutes)

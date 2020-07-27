@@ -8,8 +8,7 @@ const UserSchema = new mongoose.Schema({
         required: true,
         minlength: 4,
         maxlength: 25,
-        trim: true,
-        unique: true
+        trim: true
     },
 
     email: {
@@ -26,6 +25,13 @@ const UserSchema = new mongoose.Schema({
         required: true,
         minlength: 5,
         maxlength: 255
+    },
+    phone: {
+        type: String,
+        trim: true,
+        required: true,
+        minlength: 6,
+        maxlength: 17
     },
     shoppingCart: {
         type: Array,
@@ -44,6 +50,7 @@ const validateUser = (user) => {
             name: Joi.string().min(4).max(25).required(),
             email: Joi.string().min(5).max(150).required().email(),
             password: Joi.string().min(5).max(255).required(),
+            phone: Joi.string().min(6).max(17).required(),
             shoppingcart: Joi.array()
         })
      

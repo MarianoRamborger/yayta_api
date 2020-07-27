@@ -41,6 +41,10 @@ const productSchema = new mongoose.Schema({
     desc : {
         type: String,
         required: true
+    },
+    weight : {
+        type: Number,
+        required: true
     }
 
 })
@@ -55,7 +59,8 @@ const validateProduct = (product) => {
         price: Joi.number().required(),
         stock: Joi.number().required(),
         onSale: Joi.boolean().required(),
-        desc: Joi.string().required()
+        desc: Joi.string().required(),
+        weight: Joi.number().required()
     })  
 
     return pSchema.validate(product)

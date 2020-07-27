@@ -20,6 +20,7 @@
             <input name='picture' id="picture" type="text"   class="form-input" placeholder="link de la imagen">    
             <input name='onSale' id="onSale" type="text"   class="form-input" placeholder="En oferta? true/false">
             <input name='desc' id="desc" type="text"  class="form-input" placeholder="Descripción">
+            <input name='peso' id="peso" type="text"  class="form-input" placeholder="Peso (ej 1.50 = 1kg 500g")>
 
 
             <button type="button" class="form-button" onclick="update()"> Enviar</button>
@@ -45,7 +46,7 @@
         
           
             var xhr = new XMLHttpRequest();
-            let data = { name : datalist[0].value, type: datalist[1].value, stock: datalist[2].value, price: datalist[3].value, picture: datalist[4].value, onSale: datalist[5].value, desc: datalist[6].value} 
+            let data = { name : datalist[0].value, type: datalist[1].value, stock: datalist[2].value, price: datalist[3].value, picture: datalist[4].value, onSale: datalist[5].value, desc: datalist[6].value, weight: datalist[7].value} 
             
             xhr.open("PUT", "./products/updateproduct")
         
