@@ -1,7 +1,7 @@
 const express = require('express');
 const UserModel = require('../Models/User');
 const router = express.Router();
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const Joi = require('@hapi/joi');
 const _ = require('lodash')
 const {User, validateUser, validatePassword} = UserModel
