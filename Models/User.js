@@ -2,7 +2,7 @@ const Joi = require('@hapi/joi')
 const mongoose = require('mongoose')
 
 const UserSchema = new mongoose.Schema({
-//Soluciones? Sacar el new, da otro error.
+
     name: {
         type: String,
         required: true,
@@ -71,3 +71,5 @@ const validatePassword = (request) => {
 }
 
 module.exports = { User, validateUser, validatePassword}
+
+

@@ -1,7 +1,7 @@
 
 const JSONWEBTOKEN = require("jsonwebtoken")
 
-const key = "$Clavesupersecreta05"
+const key = "$RemovidoporMotivosdeSeguridad"
     const algorithm = "HS512"
 
 const GenerateJWT = (claims) => { 
